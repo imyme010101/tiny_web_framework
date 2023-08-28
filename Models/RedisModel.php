@@ -15,16 +15,28 @@ class RedisModel extends \App\Libs\Database {
 
     return $this->fetch_array($result)['data'];
   }
+  
+  public function idx($idx) {
+    $result = $this->query("
+      SELECT data
+      FROM {$this->_config['table']['redis']}
+      WHERE idx = '{$idx}'
+    ");
+
+    return $this->fetch_array($result)['data'];
+  }
 
   public function set($key, $value) {
     $value = addslashes($value);
     
     $this->query("DELETE FROM {$this->_config['table']['redis']} WHERE name = '{$key}'");
 
-    return $this->query("
+    $this->query("
       INSERT INTO {$this->_config['table']['redis']}
       (name, data)
       VALUES ('{$key}', '{$value}')
     ");
+
+    return $this->last_id();
   }
 }

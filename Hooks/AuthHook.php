@@ -9,7 +9,7 @@ class AuthHook
   public function token_chk() {
     $access_token = "eyJhbGciOiJzaGEyNTYiLCJ0eXAiOiJKV1QifS57ImV4cCI6MTY5MzI3MDM0MCwiaWF0IjoxNjkzMjU5NTQwLCJpZCI6InRlc3QiLCJlbWFpbCI6InRlc3QiLCJwYXNzd29yZCI6Iio5NEJEQ0VCRTE5MDgzQ0UyQTFGOTU5RkQwMkY5NjRDN0FGNENGQzI5IiwicnVsZXMiOlsiVSJdfS40NjYzOWI0NDI2MzQyM2Q2NzY0NTI5M2Y3MTE2ZWVlZGNhZWRlMGNiN2QyM2FlMzNjNTc0ZjNmZGUxNWE2MjU4";
     //$refresh_token = "eyJhbGciOiJzaGEyNTYiLCJ0eXAiOiJKV1QifS57ImlhdCI6MTY5MzI1NDAzMSwiaWQiOiJ0ZXN0IiwiZW1haWwiOiJ0ZXN0IiwicGFzc3dvcmQiOiIqOTRCRENFQkUxOTA4M0NFMkExRjk1OUZEMDJGOTY0QzdBRjRDRkMyOSIsInJ1bGVzIjpbIlUiXX0uN2IwYTBjMDhlNDVhYTU3NDg5ZmQzY2FjNDI4MDczNjY1YzU3YmM4OWVjMTFkYTdmNmE2ZDllM2ExZTdmMTkyNA==";
-    $refresh_token = '';
+    $refresh_token_idx = 0;
 
     $jwt = new App\Libs\Jwt();
     $common = new App\Libs\Common();
@@ -19,17 +19,21 @@ class AuthHook
 
     $redisModel = new RedisModel();
 
-    if($refresh_token) {
-      $refresh_token_parted = explode('.', base64_decode($refresh_token));    
-      $refresh_token_info = json_decode($refresh_token_parted[1], true);
-      
-      $memberModel = new MemberModel();
+    
 
-      $member1 = $memberModel->get_member($access_token_info['id'], "{$access_token_info['password']}");
-      $member2 = $memberModel->get_member($refresh_token_info['id'], "{$refresh_token_info['password']}");
-      
-      if(empty(array_diff($member1, $member2))) {
-        if(time() > $access_token_info['exp']) {
+    if($refresh_token_idx) {
+      if(time() > $access_token_info['exp']) {
+        $refresh_token = $redisModel->idx($refresh_token_idx);
+
+        $refresh_token_parted = explode('.', base64_decode($refresh_token));    
+        $refresh_token_info = json_decode($refresh_token_parted[1], true);
+        
+        $memberModel = new MemberModel();
+
+        $member1 = $memberModel->get_member($access_token_info['id'], "{$access_token_info['password']}");
+        $member2 = $memberModel->get_member($refresh_token_info['id'], "{$refresh_token_info['password']}");
+        
+        if(empty(array_diff($member1, $member2))) {
           $access_token = $jwt->encode(
             array(
               'exp' => time() + (360 * 30),
@@ -53,18 +57,12 @@ class AuthHook
               'rules' => explode(',', $member1['roles'])
             )
           );
-          $redisModel->set($member1['id'] . "_refresh_token", $refresh_token);
+          $refresh_token_idx = $redisModel->set($member1['id'] . "_refresh_token", $refresh_token);
+            
+          $common->responseApi(200, "토큰 재 생성이 완료 되어니다.", Array('access_token' => $access_token, 'refresh_token_idx' => $refresh_token_idx));
         }
-
-        self::$token_info = Array(
-          'id' => $access_token_info['id'],
-          'email' => $access_token_info['email'],
-          'rules' => $access_token_info['rules'],
-          'access_token' => $access_token,
-          'refresh_token' => $refresh_token
-        );
       } else {
-        $common->responseError(203, "토큰을 재생성 할수 없습니다.");
+        $common->responseApi(200, "토큰 시간이 남았습니다.", Array('access_token' => $access_token, 'refresh_token_idx' => $refresh_token_idx));
       }
     } else {
       $token = $redisModel->get($access_token_info['id'] . "_access_token");
@@ -81,8 +79,6 @@ class AuthHook
           'email' => $access_token_info['email'],
           'rules' => $access_token_info['rules']
         );
-
-        
       }
     }
   }

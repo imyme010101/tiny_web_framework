@@ -149,7 +149,7 @@ class Database
   }
 
 
-  public function insert_id()
+  public function last_id()
   {
     if (function_exists('mysqli_insert_id') && MYSQLI_USE)
       return mysqli_insert_id($this->link);
