@@ -1,0 +1,19 @@
+<?php
+
+$_config['prefix'] = 'i_';
+
+$_config['MYSQL_HOST'] = 'localhost';
+$_config['MYSQL_USER'] = 'root';
+$_config['MYSQL_PASSWORD'] = '';
+$_config['MYSQL_DB'] = '';
+$_config['MYSQLI_USE'] = true;
+$_config['DISPLAY_SQL_ERROR'] = FALSE;
+$_config['DEBUG'] = false;
+$_config['DB_CHARSET'] = "utf8";
+
+$_config['tables']['board'] = $_config['prefix'] . "board";
+$_config['tables']['board_write'] = $_config['prefix'] . "board_write";
+$_config['tables']['board_file'] = $_config['prefix'] . "board_file";
+$_config['tables']['member'] = $_config['prefix'] . "member";
+$_config['tables']['sms_log'] = $_config['prefix'] . "sms_log";
+?>

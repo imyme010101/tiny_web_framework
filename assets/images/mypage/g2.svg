@@ -1,0 +1,52 @@
+<svg width="31" height="32" viewBox="0 0 31 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Group">
+<g id="Group_2">
+<g id="Clip path group">
+<mask id="mask0_238_341" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="15" y="13" width="16" height="15">
+<g id="SVGID_2_">
+<path id="Vector" d="M30.4361 16.2565C30.4361 15.1566 30.338 14.0998 30.154 13.0859H15.5659V19.081H23.9015C23.542 21.0192 22.4514 22.6595 20.8105 23.7594V27.6477H25.8159C28.7452 24.9505 30.4361 20.9761 30.4361 16.2565Z" fill="white"/>
+</g>
+</mask>
+<g mask="url(#mask0_238_341)">
+<path id="XMLID_24_" d="M39.0417 4.47656H6.96033V36.2611H39.0417V4.47656Z" fill="#3E82F1"/>
+</g>
+</g>
+</g>
+<g id="Group_3">
+<g id="Clip path group_2">
+<mask id="mask1_238_341" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="1" y="18" width="25" height="14">
+<g id="SVGID_4_">
+<path id="Vector_2" d="M15.566 31.4063C19.7476 31.4063 23.2548 30.019 25.8178 27.6506L20.8123 23.7623C19.4259 24.6917 17.6508 25.2425 15.5678 25.2425C11.5342 25.2425 8.11806 22.5161 6.90023 18.8516H1.72449V22.8672C4.27194 27.9329 9.51133 31.4063 15.566 31.4063Z" fill="white"/>
+</g>
+</mask>
+<g mask="url(#mask1_238_341)">
+<path id="XMLID_21_" d="M34.4233 10.2383H-6.88123V40.0158H34.4233V10.2383Z" fill="#32A753"/>
+</g>
+</g>
+</g>
+<g id="Group_4">
+<g id="Clip path group_3">
+<mask id="mask2_238_341" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="8" width="7" height="15">
+<g id="SVGID_6_">
+<path id="Vector_3" d="M6.89829 18.8511C6.58867 17.9216 6.41322 16.9285 6.41322 15.906C6.41322 14.8836 6.58867 13.8905 6.89829 12.961V8.94531H1.72426C0.675007 11.0383 0.076416 13.4051 0.076416 15.906C0.076416 18.407 0.675007 20.7737 1.72426 22.8667L6.89829 18.8511Z" fill="white"/>
+</g>
+</mask>
+<g mask="url(#mask2_238_341)">
+<path id="XMLID_18_" d="M15.5039 0.332031H-8.52917V31.4762H15.5039V0.332031Z" fill="#F9BB00"/>
+</g>
+</g>
+</g>
+<g id="Group_5">
+<g id="Clip path group_4">
+<mask id="mask3_238_341" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="1" y="0" width="25" height="13">
+<g id="SVGID_8_">
+<path id="Vector_4" d="M15.5658 6.57003C17.8398 6.57003 19.8815 7.35148 21.4863 8.88855L25.9293 4.44257C23.246 1.9416 19.7405 0.40625 15.5658 0.40625C9.51108 0.40625 4.27169 3.87972 1.72424 8.94535L6.89999 12.961C8.11609 9.29648 11.5322 6.57003 15.5658 6.57003Z" fill="white"/>
+</g>
+</mask>
+<g mask="url(#mask3_238_341)">
+<path id="XMLID_15_" d="M34.5351 -8.20703H-6.88123V21.5705H34.5351V-8.20703Z" fill="#E74133"/>
+</g>
+</g>
+</g>
+</g>
+</svg>
