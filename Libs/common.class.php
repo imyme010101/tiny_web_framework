@@ -9,10 +9,16 @@ class Common
     global $_config;
     
     $this->_config = $_config;
+
+    header('Content-type: application/json');
   }
 
-  public function responseApi($result) {
-    echo json_encode($result);
+  public function responseApi($code, $message, $result) {
+    echo json_encode(Array(
+      'code' => $code,
+      'message' => $message,
+      'result' => $result
+    ), JSON_UNESCAPED_UNICODE);
     exit;
   }
 
@@ -20,7 +26,7 @@ class Common
     echo json_encode(Array(
       'code' => $code,
       'message' => $message
-    ));
+    ), JSON_UNESCAPED_UNICODE);
     exit;
   }
 }

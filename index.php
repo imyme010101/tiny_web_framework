@@ -8,11 +8,24 @@ foreach ($files as $file) {
   require_once $file;
 }
 
+$folder = $_config['ROOT_PATH'] . '/Models';
+$files = glob($folder . '/*.php');
+foreach ($files as $file) {
+    require_once $file;
+}
+
+$folder = $_config['ROOT_PATH'] . '/Hooks';
+$files = glob($folder . '/*.php');
+foreach ($files as $file) {
+  require_once $file;
+}
+
 $folder = $_config['ROOT_PATH'] . '/Controllers';
 $files = glob($folder . '/*.php');
 foreach ($files as $file) {
     require_once $file;
 }
+
 error_reporting( E_ALL );
 ini_set( "display_errors", 1 );
 require_once $_config['ROOT_PATH'] . '/routes.php';

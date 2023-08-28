@@ -23,9 +23,7 @@ class Controller extends Common
   }
 
   public function model($model_name)
-  {
-    require_once $this->_config['ROOT_PATH'] . '/Models/' . $model_name . 'Model.php';
-    
+  { 
     $model = $this->dice->create($model_name . 'Model'); // UserController instance
 
     $var_name = strtolower($model_name) . 'Model';

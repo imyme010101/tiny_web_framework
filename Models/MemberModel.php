@@ -7,10 +7,14 @@ class MemberModel extends \App\Libs\Database {
   }
 
   public function get_member($id, $password) {
+    if(strpos($password, 'password') === false) {
+      $password = "'" . $password . "'";
+    }
+
     $result = $this->query("
       SELECT *
       FROM {$this->_config['table']['member']}
-      WHERE id = '{$id}' AND password = password('{$password}') AND status = 'ENABLE'
+      WHERE id = '{$id}' AND password = {$password} AND status = 'ENABLE'
     ");
 
     return $this->fetch_array($result);
