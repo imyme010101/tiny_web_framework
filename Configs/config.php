@@ -35,14 +35,15 @@ $_config['JWT_SECRET_KEY'] = "abcd12341234abcd12341234";
 $naver_api_id = "";
 $naver_api_key = "";
 
-define('KAKAO_OAUTH_REST_API_KEY', '');
-define('KAKAO_JAVASCRIPT_API_KEY', '');
+$_config['KAKAO_CLIENT_ID_KEY'] = "";
+$_config['KAKAO_JAVASCRIPT_API_KEY'] = "";
+$_config['KAKAO_CALLBACK_URI'] = "";
 
-define('GOOGLE_CLIENT_ID_KEY', '');
-define('GOOGLE_SECRET_KEY', '');
+$_config['GOOGLE_CLIENT_ID_KEY'] = "";
+$_config['GOOGLE_SECRET_KEY'] = "";
 
-define('NAVER_CLIENT_ID_KEY', '');
-define('NAVER_SECRET_KEY', '');
+$_config['NAVER_CLIENT_ID_KEY'] = "";
+$_config['NAVER_SECRET_KEY'] = "";
 
 
 define("DISPLAY_SQL_ERROR", false);

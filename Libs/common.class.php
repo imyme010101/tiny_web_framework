@@ -9,11 +9,11 @@ class Common
     global $_config;
     
     $this->_config = $_config;
-
-    header('Content-type: application/json');
   }
 
   public function responseApi($code, $message, $result) {
+    header('Content-type: application/json');
+
     echo json_encode(Array(
       'code' => $code,
       'message' => $message,
@@ -23,6 +23,8 @@ class Common
   }
 
   public function responseError($code, $message) {
+    header('Content-type: application/json');
+
     echo json_encode(Array(
       'code' => $code,
       'message' => $message

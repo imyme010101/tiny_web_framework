@@ -3,6 +3,9 @@ namespace App\Libs;
 
 class Controller extends Common
 {
+  public $_config;
+  public $dice;
+
   public function __construct() {
     global $_config;
 
@@ -12,14 +15,34 @@ class Controller extends Common
     parent::__construct();
   }
 
-  public function compo($path, $parameters) {
+  public function compo($path, $parameters=Array()) {
     ob_start();
-      extract($parameters);
+      extract(@$parameters);
       include($this->_config['ROOT_PATH'] . '/components/'.$path);
       $result = ob_get_contents();
     ob_end_clean();
 
-    return $result;
+    echo $result;
+  }
+
+  public function view($path, $parameters=Array()) {
+    ob_start();
+      extract(@$parameters);
+
+      if(@$head) {
+        include($this->_config['ROOT_PATH'] . '/views/'.$head.'_view.php');
+      }
+
+      include($this->_config['ROOT_PATH'] . '/views/'.$path.'_view.php');
+      
+      if(@$tail) {
+        include($this->_config['ROOT_PATH'] . '/views/'.$tail.'_view.php');
+      }
+
+      $result = ob_get_contents();
+    ob_end_clean();
+
+    echo $result;
   }
 
   public function model($model_name)

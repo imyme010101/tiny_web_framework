@@ -2,9 +2,9 @@
 
 class MainController extends \App\Libs\Controller
 {
-  public function get_index()
+  public function index()
   {
-    return "index called";
+    $this->responseApi(200, 'Hello World', Array());
   }
 
   public function get_list()
