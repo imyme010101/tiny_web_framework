@@ -133,6 +133,15 @@ class Database
     return $row;
   }
 
+  public function fetch_array_rows($result) {
+    $ret = array();
+    while ($row = $this->fetch_array($result)) {
+      $ret[] = $row;
+    }
+
+    return $ret;
+  }
+
   function fetch_array_row($sql)
   {
     $result = sql_query($sql);

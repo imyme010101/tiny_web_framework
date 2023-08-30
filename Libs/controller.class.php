@@ -18,11 +18,11 @@ class Controller extends Common
   public function compo($path, $parameters=Array()) {
     ob_start();
       extract(@$parameters);
-      include($this->_config['ROOT_PATH'] . '/components/'.$path);
+      include($this->_config['ROOT_PATH'] . '/components/'.$path.'.php');
       $result = ob_get_contents();
     ob_end_clean();
 
-    echo $result;
+    return $result;
   }
 
   public function view($path, $parameters=Array()) {

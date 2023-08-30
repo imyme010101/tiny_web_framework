@@ -2,3 +2,4 @@ node_modules
 composer.lock
 .vscode
 Configs/config.db.php
+_nuxt

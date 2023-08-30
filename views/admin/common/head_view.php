@@ -23,18 +23,7 @@
   <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
 
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            point1: '#FFAD4E',
-          }
-        }
-      }
-    }
-  </script>
+  <link rel="stylesheet" href="/assets/css/tailwind.css">
 
   <title>
     <?php echo $title; ?>
@@ -43,7 +32,7 @@
 
 <body class="bg-gray-100 min-h-screen h-full h-full flex flex-col">
 
-  <div class="bg-white w-full">
+  <div class="bg-white w-full border-b border-gray-200">
     <a href="/admin" class="flex items-center justify-center font-black text-point1 py-4">
       TOGO ADMIN
     </a>
@@ -51,25 +40,24 @@
 
   <div class="flex flex-1">
     <nav class="w-64 flex flex-col items-center justify-start bg-white">
-      <a class="flex items-center" href="/admin/member/list">
-        <svg class="w-6 h-6 text-point1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-          stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-        </svg>
-
-        <span class="mx-3">회원 관리</span>
-      </a>
-
-      <a class="flex items-center mt-4" href="/admin/board/list">
+      <a class="flex items-center mt-4" href="/admin/cp/list">
         <svg class="w-6 h-6 text-point1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
           stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
             d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
         </svg>
 
-        <span class="mx-3">게시판 관리</span>
+        <span class="mx-3">캠페인 관리</span>
       </a>
+
+
     </nav>
 
     <div class="container mx-auto py-8">
+      <?php
+      if($title) {
+      ?>
+      <h1 class="inline text-2xl font-semibold leading-none"><?php echo $title; ?></h1>
+      <?php
+      }
+      ?>

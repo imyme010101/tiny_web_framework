@@ -64,10 +64,8 @@ switch ($routeInfo[0]) {
       $parameters = $routeInfo[2]; // Action parameters list (e.g. route parameters list)
       
       $controller = $dice->create($controllerName); // UserController instance
-      call_user_func_array(
-        [$controller, $action] // callable
-        , $parameters
-      );
+
+      call_user_func_array([$controller, $action], $parameters);
     }
     
 
