@@ -1,19 +1,28 @@
 <?php
 
-$_config['prefix'] = 'i_';
+$_config['prefix'] = '';
 
-$_config['MYSQL_HOST'] = 'localhost';
+$_config['MYSQL_HOST'] = '141.164.51.23';
 $_config['MYSQL_USER'] = 'root';
 $_config['MYSQL_PASSWORD'] = '';
-$_config['MYSQL_DB'] = '';
+$_config['MYSQL_DB'] = 'shop';
 $_config['MYSQLI_USE'] = true;
 $_config['DISPLAY_SQL_ERROR'] = FALSE;
 $_config['DEBUG'] = false;
 $_config['DB_CHARSET'] = "utf8";
 
-$_config['tables']['board'] = $_config['prefix'] . "board";
-$_config['tables']['board_write'] = $_config['prefix'] . "board_write";
-$_config['tables']['board_file'] = $_config['prefix'] . "board_file";
-$_config['tables']['member'] = $_config['prefix'] . "member";
-$_config['tables']['sms_log'] = $_config['prefix'] . "sms_log";
+$_config['table']['board'] = $_config['prefix'] . "board";
+$_config['table']['board_write'] = $_config['prefix'] . "board_write";
+$_config['table']['board_file'] = $_config['prefix'] . "board_file";
+;
+$_config['table']['board_comment'] = $_config['prefix'] . "board_comment";
+$_config['table']['member'] = $_config['prefix'] . "member";
+$_config['table']['member_role'] = $_config['prefix'] . "member_role";
+$_config['table']['member_penalty_log'] = $_config['prefix'] . "member_penalty_log";
+
+$_config['table']['redis'] = $_config['prefix'] . "redis";
+
+$_config['table']['campaign_category'] = $_config['prefix'] . "campaign_category";
+$_config['table']['campaign_list'] = $_config['prefix'] . "campaign_list";
+$_config['table']['campaign_apply'] = $_config['prefix'] . "campaign_apply";
 ?>

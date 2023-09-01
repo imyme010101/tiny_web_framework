@@ -49,12 +49,14 @@ $_config['NAVER_SECRET_KEY'] = "";
 define("DISPLAY_SQL_ERROR", false);
 define("MYSQLI_USE", true);
 
-
 $_config['store']['media'] = array(
-    "instagram" => "인스타그램",
-    "blog" => "네이버 블로그",
-    "receipt" => "영수증 리뷰"
+    "instagram" => Array("https://www.instagram.com", "인스타그램"),
+    "naver" => Array("https://blog.naver.com", "네이버 블로그"),
+    'youtube' => Array("https://www.youtube.com", "유튜브"),
+    "tiktok" => Array("https://vt.tiktok.com", "틱톡"),
+    "receipt" => Array("#", "영수증 리뷰")
 );
+
 
 include_once $_SERVER['DOCUMENT_ROOT'] . "/Configs/config.db.php";
 ?>

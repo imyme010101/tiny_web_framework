@@ -13,6 +13,7 @@
 
       $paging_url = $paging_base_url . '?' . $paging_url;
 
+      $pg_html .= '<div class="flex">';
       //if ($cur_page > 1) {
       if ($total_page > 0) {
         $this_url = preg_replace('/(page=)([^&]+)/', '${1}1', $paging_url);
@@ -22,7 +23,7 @@
           </button>    
         " . PHP_EOL;
       }
-
+      
       $start_page = (((int) (($page - 1) / $paging_limit)) * $paging_limit) + 1;
       $end_page = $start_page + $paging_limit - 1;
 
@@ -38,6 +39,7 @@
           </button>    
         " . PHP_EOL;
       }
+      $pg_html .= '</div>' . PHP_EOL;
 
       $pg_html .= '<div class="flex">';
 
@@ -48,19 +50,20 @@
           if ($page != $k)
             $pg_html .= "
               <p
-              class='text-sm font-medium leading-none cursor-pointer text-gray-600 hover:text-indigo-700 border-t border-transparent hover:border-indigo-400 pt-3 mr-4 px-2'>
+              class='text-sm font-medium leading-none cursor-pointer text-gray-600 hover:text-point1 border-t border-transparent hover:border-point1 pt-3 mr-4 px-2'>
               {$k}</p>
             " . PHP_EOL;
           else
             $pg_html .= "
               <p
-              class='text-sm font-medium leading-none cursor-pointer text-indigo-700 border-t border-indigo-400 pt-3 mr-4 px-2'>
+              class='text-sm font-black leading-none cursor-pointer text-point1 border-t border-point1 pt-3 mr-4 px-2'>
               {$k}</p>
             " . PHP_EOL;
         }
       }
       $pg_html .= '</div>';
 
+      $pg_html .= '<div class="flex">';
       if ($total_page > $end_page) {
         $this_url = preg_replace('/(page=)([^&]+)/', '${1}' . ($page + 1), $paging_url);
         $pg_html .= "
@@ -79,6 +82,7 @@
           </button>    
         " . PHP_EOL;
       }
+      $pg_html .= '</div>' . PHP_EOL;
 
       echo $pg_html;
       ?>
