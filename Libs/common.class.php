@@ -24,7 +24,8 @@ class Common
 
   public function responseError($code, $message) {
     header('Content-type: application/json');
-
+    http_response_code($code);
+    
     echo json_encode(Array(
       'code' => $code,
       'message' => $message

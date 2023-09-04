@@ -6,10 +6,12 @@ class AuthHook
 {
   public static $token_info = Array();
 
-  public function token_chk() {
-    $access_token = "eyJhbGciOiJzaGEyNTYiLCJ0eXAiOiJKV1QifS57ImV4cCI6MTY5MzI3MDM0MCwiaWF0IjoxNjkzMjU5NTQwLCJpZCI6InRlc3QiLCJlbWFpbCI6InRlc3QiLCJwYXNzd29yZCI6Iio5NEJEQ0VCRTE5MDgzQ0UyQTFGOTU5RkQwMkY5NjRDN0FGNENGQzI5IiwicnVsZXMiOlsiVSJdfS40NjYzOWI0NDI2MzQyM2Q2NzY0NTI5M2Y3MTE2ZWVlZGNhZWRlMGNiN2QyM2FlMzNjNTc0ZjNmZGUxNWE2MjU4";
+  public function chk() {
+    $headers = apache_request_headers();
+
+    $access_token = $headers['access_token'];
     //$refresh_token = "eyJhbGciOiJzaGEyNTYiLCJ0eXAiOiJKV1QifS57ImlhdCI6MTY5MzI1NDAzMSwiaWQiOiJ0ZXN0IiwiZW1haWwiOiJ0ZXN0IiwicGFzc3dvcmQiOiIqOTRCRENFQkUxOTA4M0NFMkExRjk1OUZEMDJGOTY0QzdBRjRDRkMyOSIsInJ1bGVzIjpbIlUiXX0uN2IwYTBjMDhlNDVhYTU3NDg5ZmQzY2FjNDI4MDczNjY1YzU3YmM4OWVjMTFkYTdmNmE2ZDllM2ExZTdmMTkyNA==";
-    $refresh_token_idx = 0;
+    $refresh_token_idx = @$headers['refresh_token_idx'] ? @$headers['refresh_token_idx'] : 0;
 
     $jwt = new App\Libs\Jwt();
     $common = new App\Libs\Common();
@@ -68,10 +70,10 @@ class AuthHook
       $token = $redisModel->get($access_token_info['id'] . "_access_token");
 
       if(!$token || $token != $access_token) {
-        $common->responseError(201, "유효하지 않은 토큰입니다.");
+        $common->responseError(301, "유효하지 않은 토큰입니다.");
       } else {
         if(time() > $access_token_info['exp']) {
-          $common->responseError(202, "토큰 시간이 만료 되었습니다.");
+          $common->responseError(302, "토큰 시간이 만료 되었습니다.");
         }
         
         self::$token_info = Array(

@@ -88,7 +88,7 @@ class Database
     $sql = preg_replace("#^select.*from.*where.*`?information_schema`?.*#i", "select 1", $sql);
 
     $start_time = $this->is_debug ? get_microtime() : 0;
-
+    
     if (function_exists('mysqli_query') && MYSQLI_USE) {
       if ($error) {
         $result = @mysqli_query($this->link, $sql) or die("<p>$sql<p>" . mysqli_errno($this->link) . " : " .  mysqli_error($this->link) . "<p>error file : {$_SERVER['SCRIPT_NAME']}");
@@ -117,8 +117,8 @@ class Database
 
   public function fetch($sql, $error = DISPLAY_SQL_ERROR)
   {
-    $result = sql_query($sql, $error, $this->link);
-    $row = sql_fetch_array($result);
+    $result = $this->query($sql);
+    $row = $this->fetch_array($result);
 
     return $row;
   }

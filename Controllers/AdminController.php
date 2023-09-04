@@ -111,12 +111,15 @@ class AdminController extends \App\Libs\Controller
       $view = Array();
     }
 
+    $address_html = $this->compo('address', Array());
+
     $this->view('admin/member/write', Array(
       'title' => '회원 추가',
       'head' => 'admin/common/head',
       'tail' => 'admin/common/tail',
       'data' => Array(
         'view' => $view,
+        'address_html' => $address_html,
         'media' => $this->_config['store']['media'],
         'category_lv1' => $this->category_lv1,
         'category_lv2' => $this->category_lv2

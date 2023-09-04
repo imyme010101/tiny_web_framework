@@ -5,9 +5,9 @@ class ProcController extends \App\Libs\Controller
 
   public function __construct()
   {
-    parent::__construct();
-
     $this->db = new \App\Libs\Database();
+
+    parent::__construct();
   }
 
   public function index($clazz, $func)
@@ -20,23 +20,29 @@ class ProcController extends \App\Libs\Controller
     $id = $_REQUEST['id'];
     $name = $_REQUEST['name'];
     $nick = $_REQUEST['nick'];
+    if(!$name)
+      $name = $_REQUEST['nick'];
+
     $password = $_REQUEST['password'];
     $password_re = $_REQUEST['password_re'];
     $phone_number = $_REQUEST['phone_number'];
     $address = $_REQUEST['address'];
     $address_detail = $_REQUEST['address_detail'];
     $zip_code = $_REQUEST['zip_code'];
+    $gender = $_REQUEST['gender'];
 
-    $email = $_REQUEST['email_1'] . '@' . $_REQUEST['email_2'];
-
-    $all_agree = $_REQUEST['all_agree'] ? 'Y' : 'N';
-    $email_agree = $_REQUEST['email_agree'] ? 'Y' : 'N';
-    $sms_agree = $_REQUEST['sms_agree'] ? 'Y' : 'N';
-
-    if ($all_agree == 'Y') {
-      $email_agree = 'Y';
-      $sms_agree = 'Y';
+    $sns_array = $_REQUEST['sns'];
+    $use_sns_array = Array();
+    foreach($sns_array as $key => $value) {
+      $use_sns_array[] = $key;
     }
+
+    $sns = json_encode($sns_array);
+    $use_sns = implode(',', $use_sns_array);
+
+    $email = $_REQUEST['email'];
+
+    $marketing = $_REQUEST['marketing'] ? 'Y' : 'N';
 
     if ($password != $password_re) {
       $this->responseError(201, '비밀번호를 확인해 주세요.');
@@ -47,14 +53,14 @@ class ProcController extends \App\Libs\Controller
     }
 
     if (!preg_match('/^[a-z0-9-_]{3,15}$/', $id)) {
-      $this->responseError(201, '아이디 형식이 틀렵습니다.');
+      $this->responseError(201, '^[a-z0-9-_]{3,15} 아이디 형식이 틀렵습니다.');
     }
 
     if (!$name) {
       $this->responseError(201, '이름을 입력해 주세요.');
     }
     
-    if (!$name) {
+    if (!$nick) {
       $this->responseError(201, '닉네임 입력해 주세요.');
     }
 
@@ -67,48 +73,86 @@ class ProcController extends \App\Libs\Controller
     // if (!$phone_number) {
     //   $this->responseError(201, '헨드폰 번호를 입력해 주세요.');
     // }
+      
+    $result = $this->db->fetch("select count(*) as cnt from {$this->_config['table']['member']} where id = '{$id}' ");
 
-    $result = $this->db->fetch_array("select id, status from {$this->_config['table']['member']} where id = '{$id}' ");
+    if (!$result['cnt']) {
+      $insert_result = $this->db->query("
+        INSERT INTO {$this->_config['table']['member']}
+        SET
+          id = '{$id}',
+          name = '{$name}',
+          nick = '{$nick}',
+          password = password('{$password}'),
+          email = '{$email}',
+          phone_number = '{$phone_number}',
+          address = '{$address}',
+          address_detail = '{$address_detail}',
+          zip_code = '{$zip_code}',
+          gender = '{$gender}',
+          sns = '{$sns}',
+          use_sns = '{$use_sns}',
+          marketing = '{$marketing}'
+      ");
 
-    if ($result['status'] == 0) {
-      if (!$_SESSION['sns_login_wait_chk']) {
-        $query = "INSERT INTO {$_tn['rk_member']} (cu_idx, team, status, id, pw, name, hp, zip_code, address, address_detail, email, email_agree, sms_agree, regdate) VALUES ('{$_SESSION['auth_no_cu_idx_chk']}', '$team', 1, '$id', md5('$pw'), '$name', '$phone_number', '$zip_code', '$address', '$address_detail', '$email', '$email_agree', '$sms_agree', unix_timestamp())";
-        $result = sql_query($query);
-      } else {
-        $query = "UPDATE {$_tn['rk_member']} SET cu_idx = '{$_SESSION['auth_no_cu_idx_chk']}', team = '{$team}', status = 1, pw = md5('$pw'), name = '$name', hp = '$phone_number', zip_code = '$zip_code', address = '$address', address_detail = '$address_detail', email = '$email', email_agree = '$email_agree', sms_agree = '$sms_agree' WHERE id = '$id' ";
-        $result = sql_query($query);
-      }
-
-      if ($result) {
-        unset($_SESSION['sns_login_wait_chk']);
-        unset($_SESSION['sns_login_wait_id']);
-        unset($_SESSION['auth_no_chk']);
-
-        $_SESSION['login_chk'] = $id;
-        $_SESSION['login_id'] = $id;
-
-        json_return(
-          array(
-            'msg' => "회원가입가 완료되었습니다.",
-            'result' => true
-          )
-        );
-      } else {
-        json_return(
-          array(
-            'msg' => "회원가입가 완료되지 않았습니다.",
-            'result' => false
-          )
-        );
+      if ($insert_result) {
+        $this->responseApi(200, "회원가입이 완료되었습니다.", Array(
+          'id' => $id
+        ));
       }
     } else {
-      json_return(
-        array(
-          'msg' => "이미 가입된 아이디가 있습니다.",
-          'result' => false
-        )
-      );
+      $this->responseApi(201, "아이디가 사용중인 아이디입니다.", Array(
+        'id' => $id
+      ));
     }
+  }
+
+  public function member_delete() {
+    $id = $_REQUEST['id'];
+    $password = $_REQUEST['password'];
+
+    if (!$id) {
+      $this->responseError(201, '아이디를 입력해 주세요.');
+    }
+
+    $result = $this->db->fetch("select count(*) as cnt from {$this->_config['table']['member']} where id = '{$id}' AND password = password('{$password}') ");
+
+    if (!$result['cnt']) {
+      $this->responseError(202, '회원 삭제 처리중 오류 발생 하였습니다.');
+    } else {
+      if($this->db->query("UPDAte {$this->_config['table']['member']} SET status = 'DISABLE', delete_at = now() where id = '{$id}' ")) {
+        $this->responseApi(200, "회원 삭제가 완료되었습니다.", Array(
+          'id' => $id
+        ));
+      } else {
+        $this->responseError(202, "회원 삭제 처리중 오류 발생 하였습니다.");
+      }
+    }
+  }
+
+  public function member_profile() {
+    $id = $_REQUEST['id'];
+
+    if (!$id) {
+      $this->responseError(201, '아이디를 입력해 주세요.');
+    }
+    $ext = substr(strrchr($_FILES['profile_image']['name'], "."), 1);
+    $ext = strtolower($ext);
+  
+    if ($ext != "jpg" and $ext != "png" and $ext != "jpeg" and $ext != "gif") {
+      $this->responseError(201, '이미지 형식만 작성 가능합니다.');
+    }
+  
+    $name = $id;
+    $filename = $name . '.jpg';
+    $destination = $_SERVER['DOCUMENT_ROOT'] . '/uploads/member/' . $filename;
+    $location =  $_FILES["profile_image"]["tmp_name"];
+  
+    move_uploaded_file($location, $destination);
+
+    $this->responseApi(200, "파일이 업로드되었습니다.", Array(
+      'path' => '/uploads/member/' . $filename
+    ));
   }
 }
 ?>
