@@ -142,13 +142,17 @@ class AdminController extends \App\Libs\Controller
 
   public function wallet_list()
   {
+    $member_id = @$_GET['member_id'];
+
     $page = @$_GET['page'] ? @$_GET['page'] : 1;
     $total_row = 0;
     $lists = array();
     $limit = 10;
     $start = ($page - 1) * $limit;
 
-    $wallet_result = $this->memberModel->get_wallet_list($start, $limit);
+    $this->model('Member');
+
+    $wallet_result = $this->memberModel->get_wallet_list($member_id, $start, $limit);
 
     $total_row = $wallet_result['total_row'];
     $total_page = ceil(($total_row / $limit));
@@ -166,7 +170,7 @@ class AdminController extends \App\Libs\Controller
     );
 
     $this->view('admin/wallet/list', array(
-      'title' => '포인트 관리',
+      'title' => '출금 관리',
       'head' => 'admin/common/head',
       'tail' => 'admin/common/tail',
 

@@ -124,6 +124,24 @@ class MemberController extends \App\Libs\Controller
     
   }
 
+  public function get_wallet() {
+    $member_id = $_REQUEST['member_id'];
+
+    $page = @$_GET['page'] ? @$_GET['page'] : 1;
+    $total_row = 0;
+    $lists = array();
+    $limit = @$_GET['limit'] ? @$_GET['limit'] : 10;
+    $start = ($page - 1) * $limit;
+
+    $this->model('Member');
+
+    $wallet_result = $this->memberModel->get_wallet_list($member_id, $start, $limit);
+
+
+    $this->responseApi(200, 'success', $wallet_result);
+    
+  }
+
   public function post_join()
   {
     $id = $_REQUEST['id'];

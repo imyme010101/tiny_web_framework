@@ -119,7 +119,8 @@ class MemberModel extends \App\Libs\Database
       FROM {$this->_config['table']['member_wallet']} AS w
       LEFT OUTER JOIN {$this->_config['table']['member']} AS m ON m.id = w.member_id
       WHERE
-        w.member_id = '{$member_id}'
+        1
+        " . ( $member_id ? "AND w.member_id = '{$member_id}'" : '' ) . "
       ORDER BY w.created_at DESC
       LIMIT {$limit} OFFSET {$start}
     ");
@@ -131,7 +132,8 @@ class MemberModel extends \App\Libs\Database
       SELECT COUNT(*) AS cnt
       FROM {$this->_config['table']['member_wallet']} AS w
       WHERE
-        w.member_id = '{$member_id}'
+      1
+      " . ( $member_id ? "AND w.member_id = '{$member_id}'" : '' ) . "
       "
     );
     //WHERE rd.regdate = '" . strtotime(date("Y-m-d"." 00:00:00")) . "'
