@@ -55,9 +55,23 @@ define("MYSQLI_USE", true);
 $_config['store']['media'] = array(
     "instagram" => Array("https://www.instagram.com", "인스타그램"),
     "naver" => Array("https://blog.naver.com", "네이버 블로그"),
-    'youtube' => Array("https://www.youtube.com", "유튜브"),
-    "tiktok" => Array("https://vt.tiktok.com", "틱톡"),
     "receipt" => Array("#", "영수증 리뷰")
+);
+
+$_config['store']['area'] = array(
+    '강원도',
+    '서울특별시',
+    '인천광역시',
+    '경기도',
+    '부산광역시',
+    '대구광역시',
+    '광주광역시',
+    '대전광역시',
+    '울산광역시',
+    '충청도',
+    '전라도',
+    '경상도',
+    '제주'
 );
 
 

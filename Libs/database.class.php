@@ -138,15 +138,15 @@ class Database
     while ($row = $this->fetch_array($result)) {
       $ret[] = $row;
     }
-
+    
     return $ret;
   }
 
   function fetch_array_row($sql)
   {
-    $result = sql_query($sql);
-    $ret = mysqli_fetch_row($result);
-    return $ret[0];
+    $result = $this->query($sql);
+    $ret = $this->fetch_array($result);
+    return $ret;
   }
 
   public function free_result($result)
@@ -158,7 +158,7 @@ class Database
   }
 
 
-  public function last_id()
+  public function insert_id()
   {
     if (function_exists('mysqli_insert_id') && MYSQLI_USE)
       return mysqli_insert_id($this->link);

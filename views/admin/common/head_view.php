@@ -44,12 +44,12 @@
         <span class="mx-3">회원  관리</span>
       </a>
 
-      <a class="flex items-center mt-4" href="/admin/cp/list">
+      <a class="flex items-center mt-4" href="/admin/campaign/list">
         <span class="mx-3">캠페인 관리</span>
       </a>
 
-      <a class="flex items-center mt-4" href="/admin/cp/list">
-        <span class="mx-3">문의 관리</span>
+      <a class="flex items-center mt-4" href="/admin/wallet/list">
+        <span class="mx-3">출금 관리</span>
       </a>
     </nav>
 
