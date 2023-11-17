@@ -139,10 +139,7 @@ class MemberController extends \App\Libs\Controller
 
 
     $this->responseApi(200, 'success', $wallet_result);
-  }
-
-  public function post_wallet() {
-    $member_id = @$_REQUEST['member_id'];
+    
   }
 
   public function post_join()
