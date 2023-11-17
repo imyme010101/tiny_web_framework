@@ -196,26 +196,6 @@ INSERT INTO `coupon` (`idx`, `title`, `content`, `discount_rate`, `discount_pric
 	(1, '할인쿠폰 퍼센트', '할인쿠폰', 20, 0, '2019-01-01 00:00:00', '0000-00-00 00:00:00', 'ENABLE', '2023-08-23 06:33:36'),
 	(2, '할인쿠폰 가격', '할인쿠폰', 0, 1000, '2019-01-01 00:00:00', '2019-01-01 00:00:00', 'ENABLE', '2023-08-23 06:33:36');
 
--- 테이블 shop.flyway_schema_history 구조 내보내기
-CREATE TABLE IF NOT EXISTS `flyway_schema_history` (
-  `installed_rank` int(11) NOT NULL,
-  `version` varchar(50) DEFAULT NULL,
-  `description` varchar(200) NOT NULL,
-  `type` varchar(20) NOT NULL,
-  `script` varchar(1000) NOT NULL,
-  `checksum` int(11) DEFAULT NULL,
-  `installed_by` varchar(100) NOT NULL,
-  `installed_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `execution_time` int(11) NOT NULL,
-  `success` tinyint(1) NOT NULL,
-  PRIMARY KEY (`installed_rank`),
-  KEY `flyway_schema_history_s_idx` (`success`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- 테이블 데이터 shop.flyway_schema_history:~0 rows (대략적) 내보내기
-INSERT INTO `flyway_schema_history` (`installed_rank`, `version`, `description`, `type`, `script`, `checksum`, `installed_by`, `installed_on`, `execution_time`, `success`) VALUES
-	(1, '1', 'init', 'SQL', 'V1__init.sql', -86951482, 'root', '2023-08-23 06:33:37', 962, 1);
-
 -- 테이블 shop.member 구조 내보내기
 CREATE TABLE IF NOT EXISTS `member` (
   `id` varchar(50) NOT NULL DEFAULT '',
