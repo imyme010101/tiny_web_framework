@@ -85,12 +85,12 @@ const user = {
 </button>
 
 <div 
-  class="fixed top-0 left-0 z-[111] h-screen flex transition-transform duration-500 transform-gpu pointer-events-none"
+  class="fixed top-0 left-0 z-[111] w-full h-screen flex transition-transform duration-500 transform-gpu pointer-events-none"
   :class="{ 'transform-none': isSideMenu, '-translate-x-full': !isSideMenu }"
 >
   <div
-    class="fixed top-0 left-0 bottom-0 right-0 w-full h-screen bg-[#000000a8] opacity-0 transition-opacity duration-500 transform-gpu"
-    :class="[{ 'opacity-100 pointer-events-auto': isSideMenu }]"
+    class="fixed top-0 left-0 bottom-0 right-0 w-full h-screen bg-[#000000a8]"
+    :class="[{ 'pointer-events-auto': isSideMenu }]"
     @click="statusStore.toggleSideMenu"
   ></div>
   <aside
