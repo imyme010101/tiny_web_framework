@@ -1,8 +1,14 @@
 <script setup>
 import { ref } from "vue";
+import { storeToRefs } from "pinia";
+import { useStatusStore } from "@/stores/status";
+
+const statusStore = useStatusStore()
+const { isSideMenu } = storeToRefs(statusStore);
+
+console.log(isSideMenu);
 
 const selected = ref(0);
-const isEnlarge = ref(false);
 const nav = [
   {
     icon:
@@ -64,31 +70,51 @@ const user = {
 </script>
 
 <template>
-<div 
-  class="absolute top-0 left-0 z-[111]"
-  :class="{ 'w-full bg-[#000000a8]': isEnlarge }"
->
-  <aside
-    class="relative inline-flex flex-col items-center px-2"
-    :class="{ 'h-screen bg-white': isEnlarge }"
-  >
 
+<button
+  class="fixed top-0 left-0 z-[111]"
+  @click="statusStore.toggleSideMenu"
+>
+  <svg v-if="isSideMenu" width="50" height="50" viewBox="0 0 50 50" fill="#1C274C" xmlns="http://www.w3.org/2000/svg">
+    <path d="M39 16.5C39.8284 16.5 40.5 17.1716 40.5 18C40.5 18.8284 39.8284 19.5 39 19.5V16.5ZM11 19.5C10.1716 19.5 9.5 18.8284 9.5 18C9.5 17.1716 10.1716 16.5 11 16.5V19.5ZM39 24.5C39.8284 24.5 40.5 25.1716 40.5 26C40.5 26.8284 39.8284 27.5 39 27.5V24.5ZM15 27.5C14.1716 27.5 13.5 26.8284 13.5 26C13.5 25.1716 14.1716 24.5 15 24.5V27.5ZM39 32.5C39.8284 32.5 40.5 33.1716 40.5 34C40.5 34.8284 39.8284 35.5 39 35.5V32.5ZM25 35.5C24.1716 35.5 23.5 34.8284 23.5 34C23.5 33.1716 24.1716 32.5 25 32.5V35.5ZM39 19.5H11V16.5H39V19.5ZM39 27.5H15V24.5H39V27.5ZM39 35.5H25V32.5H39V35.5Z" fill="#1C274C"/>
+  </svg>
+
+  <svg v-else width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M13 24.5C12.1716 24.5 11.5 25.1716 11.5 26C11.5 26.8284 12.1716 27.5 13 27.5V24.5ZM37 27.5C37.8284 27.5 38.5 26.8284 38.5 26C38.5 25.1716 37.8284 24.5 37 24.5V27.5ZM13 32.5C12.1716 32.5 11.5 33.1716 11.5 34C11.5 34.8284 12.1716 35.5 13 35.5V32.5ZM37 35.5C37.8284 35.5 38.5 34.8284 38.5 34C38.5 33.1716 37.8284 32.5 37 32.5V35.5ZM13 16.5C12.1716 16.5 11.5 17.1716 11.5 18C11.5 18.8284 12.1716 19.5 13 19.5V16.5ZM37 19.5C37.8284 19.5 38.5 18.8284 38.5 18C38.5 17.1716 37.8284 16.5 37 16.5V19.5ZM13 27.5H37V24.5H13V27.5ZM13 35.5H37V32.5H13V35.5ZM13 19.5H37V16.5H13V19.5Z" fill="#1C274C"/>
+  </svg>
+</button>
+
+<div 
+  class="fixed top-0 left-0 z-[111] h-screen flex transition-transform duration-500 transform-gpu pointer-events-none"
+  :class="{ 'transform-none': isSideMenu, '-translate-x-full': !isSideMenu }"
+>
+  <div
+    class="fixed top-0 left-0 bottom-0 right-0 w-full h-screen bg-[#000000a8] opacity-0 transition-opacity duration-500 transform-gpu"
+    :class="[{ 'opacity-100 pointer-events-auto': isSideMenu }]"
+    @click="statusStore.toggleSideMenu"
+  ></div>
+  <aside
+    class="relative inline-flex flex-col items-center px-2 bg-white"
+  >
     <nav class="inline-flex flex-col space-y-2">
-      <div class="flex justify-end">
-        <button 
-          @click="isEnlarge = !isEnlarge"
+      <div
+        class="flex justify-end"
+      >
+        <button
+          class="pointer-events-auto"
+          @click="statusStore.toggleSideMenu"
         >
-          <svg v-if="isEnlarge" width="50" height="50" viewBox="0 0 50 50" fill="#1C274C" xmlns="http://www.w3.org/2000/svg">
+          <svg v-if="isSideMenu" width="50" height="50" viewBox="0 0 50 50" fill="#1C274C" xmlns="http://www.w3.org/2000/svg">
             <path d="M39 16.5C39.8284 16.5 40.5 17.1716 40.5 18C40.5 18.8284 39.8284 19.5 39 19.5V16.5ZM11 19.5C10.1716 19.5 9.5 18.8284 9.5 18C9.5 17.1716 10.1716 16.5 11 16.5V19.5ZM39 24.5C39.8284 24.5 40.5 25.1716 40.5 26C40.5 26.8284 39.8284 27.5 39 27.5V24.5ZM15 27.5C14.1716 27.5 13.5 26.8284 13.5 26C13.5 25.1716 14.1716 24.5 15 24.5V27.5ZM39 32.5C39.8284 32.5 40.5 33.1716 40.5 34C40.5 34.8284 39.8284 35.5 39 35.5V32.5ZM25 35.5C24.1716 35.5 23.5 34.8284 23.5 34C23.5 33.1716 24.1716 32.5 25 32.5V35.5ZM39 19.5H11V16.5H39V19.5ZM39 27.5H15V24.5H39V27.5ZM39 35.5H25V32.5H39V35.5Z" fill="#1C274C"/>
           </svg>
-          
+
           <svg v-else width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M13 24.5C12.1716 24.5 11.5 25.1716 11.5 26C11.5 26.8284 12.1716 27.5 13 27.5V24.5ZM37 27.5C37.8284 27.5 38.5 26.8284 38.5 26C38.5 25.1716 37.8284 24.5 37 24.5V27.5ZM13 32.5C12.1716 32.5 11.5 33.1716 11.5 34C11.5 34.8284 12.1716 35.5 13 35.5V32.5ZM37 35.5C37.8284 35.5 38.5 34.8284 38.5 34C38.5 33.1716 37.8284 32.5 37 32.5V35.5ZM13 16.5C12.1716 16.5 11.5 17.1716 11.5 18C11.5 18.8284 12.1716 19.5 13 19.5V16.5ZM37 19.5C37.8284 19.5 38.5 18.8284 38.5 18C38.5 17.1716 37.8284 16.5 37 16.5V19.5ZM13 27.5H37V24.5H13V27.5ZM13 35.5H37V32.5H13V35.5ZM13 19.5H37V16.5H13V19.5Z" fill="#1C274C"/>
+            <path d="M13 24.5C12.1716 24.5 11.5 25.1716 11.5 26C11.5 26.8284 12.1716 27.5 13 27.5V24.5ZM37 27.5C37.8284 27.5 38.5 26.8284 38.5 26C38.5 25.1716 37.8284 24.5 37 24.5V27.5ZM13 32.5C12.1716 32.5 11.5 33.1716 11.5 34C11.5 34.8284 12.1716 35.5 13 35.5V32.5ZM37 35.5C37.8284 35.5 38.5 34.8284 38.5 34C38.5 33.1716 37.8284 32.5 37 32.5V35.5ZM13 16.5C12.1716 16.5 11.5 17.1716 11.5 18C11.5 18.8284 12.1716 19.5 13 19.5V16.5ZM37 19.5C37.8284 19.5 38.5 18.8284 38.5 18C38.5 17.1716 37.8284 16.5 37 16.5V19.5ZM13 27.5H37V24.5H13V27.5ZM13 35.5H37V32.5H13V35.5ZM13 19.5H37V16.5H13V19.5Z" fill="#1C274C"/>
           </svg>
         </button>
       </div>
+
       <a
-        v-show="isEnlarge"
         v-for="(link, index) in nav"
         class="flex items-center text-gray-600 py-2 cursor-pointer pl-2 pr-6 rounded-lg"
         :class="[

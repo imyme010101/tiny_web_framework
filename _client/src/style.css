@@ -56,13 +56,13 @@ body {
 .marker-select .pulse-css {
   border-radius: 100%;
   position: absolute;
-  background-color: #17889054;
+  background-color: #00000054;
 }
 .marker-select .pulse-css:before,
 .marker-select .pulse-css:after {
   content: '';
   border-radius: 100%;
-  background-color: #178890;
+  background-color: #000000;
   position: absolute;
   top: 0;
   right: 0;
